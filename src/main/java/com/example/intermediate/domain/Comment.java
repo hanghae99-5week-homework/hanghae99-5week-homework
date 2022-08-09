@@ -1,18 +1,15 @@
 package com.example.intermediate.domain;
 
 import com.example.intermediate.dto.request.CommentRequestDto;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -35,6 +32,10 @@ public class Comment extends Timestamped {
 
   @Column(nullable = false)
   private String content;
+
+  /* 220809 hyuk 추가 */
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Like> likes;
 
   public void update(CommentRequestDto commentRequestDto) {
     this.content = commentRequestDto.getContent();

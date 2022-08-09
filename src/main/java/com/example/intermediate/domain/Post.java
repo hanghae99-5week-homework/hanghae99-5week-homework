@@ -44,6 +44,10 @@ public class Post extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
+  /* 220809 hyuk 추가 */
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Like> likes;
+
   public void update(PostRequestDto postRequestDto) {
     this.title = postRequestDto.getTitle();
     this.content = postRequestDto.getContent();
