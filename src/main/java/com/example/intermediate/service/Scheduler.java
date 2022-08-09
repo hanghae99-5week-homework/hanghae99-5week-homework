@@ -1,7 +1,9 @@
-package com.example.assignment3.service;
+package com.example.intermediate.service;
 
-import com.example.assignment3.domain.Post;
-import com.example.assignment3.repository.PostRepository;
+import com.example.intermediate.domain.Comment;
+import com.example.intermediate.domain.Post;
+import com.example.intermediate.repository.CommentRepository;
+import com.example.intermediate.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,8 +20,9 @@ public class Scheduler {
 
     private final PostService postService;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
-    @Scheduled(cron = "0 08 14 * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     @Transactional
     public void deleteNoCommentPost() throws InterruptedException {
         log.info("댓글이 없는 게시물을 삭제합니다.");
@@ -28,11 +31,12 @@ public class Scheduler {
         for (int i=0; i<postList.size(); i++) {
             TimeUnit.SECONDS.sleep(1);
 
-            Post p = postList.get(i);
+            List<Comment> postIdBycomment = commentRepository.findAllByPost(postList.get(i));
 
-            if (p.getComments().size() == 0) {
-                postService.deleteNoCommentPost(p.getId());
+            if (postIdBycomment.size() == 0) {
+                postService.deleteNoCommentPost(postList.get(i).getId());
             }
         }
     }
 }
+

@@ -165,6 +165,11 @@ public class PostService {
     return ResponseDto.success("delete success");
   }
 
+   @Transactional
+   public void deleteNoCommentPost(Long id) {
+       postRepository.deleteById(id);
+   }
+
   @Transactional(readOnly = true)
   public Post isPresentPost(Long id) {
     Optional<Post> optionalPost = postRepository.findById(id);
