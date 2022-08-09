@@ -14,29 +14,29 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class SubCommentController {
 
-    private final SubCommentService subcommentService;
+    private final SubCommentService subCommentService;
 
 
-    @RequestMapping(value = "/api/auth/subcomment", method = RequestMethod.POST)
-    public ResponseDto<?> createComment(@RequestBody SubCommentRequestDto requestDto,
+    @RequestMapping(value = "/api/auth/sub-comment", method = RequestMethod.POST)
+    public ResponseDto<?> createSubComment(@RequestBody SubCommentRequestDto requestDto,
                                         HttpServletRequest request) {
-        return subcommentService.createSubComment(requestDto, request);
+        return subCommentService.createSubComment(requestDto, request);
     }
 
-    @RequestMapping(value = "/api/subcomment/{id}", method = RequestMethod.GET)
-    public ResponseDto<?> getAllComments(@PathVariable Long id) {
-        return subcommentService.getAllSubCommentsByComment(id);
+    @RequestMapping(value = "/api/sub-comment/{id}", method = RequestMethod.GET)
+    public ResponseDto<?> getAllSubComments(@PathVariable Long id) {
+        return subCommentService.getAllSubCommentsByComment(id);
     }
 
-    @RequestMapping(value = "/api/auth/subcomment/{id}", method = RequestMethod.PUT)
-    public ResponseDto<?> updateComment(@PathVariable Long id, @RequestBody SubCommentRequestDto requestDto,
+    @RequestMapping(value = "/api/auth/sub-comment/{id}", method = RequestMethod.PUT)
+    public ResponseDto<?> updateSubComment(@PathVariable Long id, @RequestBody SubCommentRequestDto requestDto,
                                         HttpServletRequest request) {
-        return subcommentService.updateSubComment(id, requestDto, request);
+        return subCommentService.updateSubComment(id, requestDto, request);
     }
 
-    @RequestMapping(value = "/api/auth/subcomment/{id}", method = RequestMethod.DELETE)
-    public ResponseDto<?> deleteComment(@PathVariable Long id,
+    @RequestMapping(value = "/api/auth/sub-comment/{id}", method = RequestMethod.DELETE)
+    public ResponseDto<?> deleteSubComment(@PathVariable Long id,
                                         HttpServletRequest request) {
-        return subcommentService.deleteSubComment(id, request);
+        return subCommentService.deleteSubComment(id, request);
     }
 }

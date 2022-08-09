@@ -31,6 +31,10 @@ public class Like extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 
+    @JoinColumn(name = "subcomment_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SubComment subComment;
+
     public boolean validateMember(Member member) {
         return !this.member.equals(member);
     }

@@ -45,7 +45,7 @@ public class Post extends Timestamped {
   private Member member;
 
   /* 220809 hyuk 추가 */
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Like> likes;
 
   public void update(PostRequestDto postRequestDto) {
