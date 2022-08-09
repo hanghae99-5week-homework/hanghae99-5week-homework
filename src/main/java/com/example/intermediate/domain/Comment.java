@@ -34,7 +34,7 @@ public class Comment extends Timestamped {
   private String content;
 
   /* 220809 hyuk 추가 */
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Like> likes;
 
   public void update(CommentRequestDto commentRequestDto) {

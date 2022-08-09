@@ -14,24 +14,34 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    @PostMapping("/post/like/{postId}")
+    @PostMapping("/like/post/{postId}")
     public ResponseDto<?> likeByPostId(@PathVariable Long postId, HttpServletRequest request) {
         return likeService.likeByPostid(postId, request);
     }
 
-    @DeleteMapping("/post/like/{postId}")
+    @DeleteMapping("/like/post/{postId}")
     public ResponseDto<?> unLikeByPostId(@PathVariable Long postId, HttpServletRequest request) {
         return likeService.unLikeByPostId(postId, request);
     }
 
-    @PostMapping("/comment/like/{commentId}")
+    @PostMapping("/like/comment/{commentId}")
     public ResponseDto<?> likeByCommentId(@PathVariable Long commentId, HttpServletRequest request) {
         return likeService.likeByCommentId(commentId, request);
     }
 
-    @DeleteMapping("/comment/like/{commentId}")
+    @DeleteMapping("/like/comment/{commentId}")
     public ResponseDto<?> unLikeByCommentId(@PathVariable Long commentId, HttpServletRequest request) {
         return likeService.unLikeByCommentId(commentId, request);
+    }
+
+    @PostMapping("/like/subcomment/{subCommentId}")
+    public ResponseDto<?> likeBySubCommentId(@PathVariable Long subCommentId, HttpServletRequest request) {
+        return likeService.likeBySubCommentId(subCommentId, request);
+    }
+
+    @DeleteMapping("/like/subcomment/{subCommentId}")
+    public ResponseDto<?> unLikeBySubCommentId(@PathVariable Long subCommentId, HttpServletRequest request) {
+        return likeService.unLikeBySubCommentId(subCommentId, request);
     }
 
 }

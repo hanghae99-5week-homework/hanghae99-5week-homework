@@ -20,21 +20,20 @@ public class AwsS3Controller {
 
     private final AwsS3Service s3Uploader;
 
-    @ExceptionHandler
+
     @PostMapping("/api/upload/image")
     @ResponseBody
     public ResponseDto<?> upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        if(multipartFile==null) {
+        if (multipartFile.isEmpty()) {
             return ResponseDto.fail("EMPTY", "multipart file is empty");
         }
-        String imgUrl = null;
-        try {
-            imgUrl = s3Uploader.upload(multipartFile, "static");
-        }
-        catch (IOException E) {
-            return ResponseDto.fail("EMPTY", "multipart file is empty");
-        }
+        String imgUrl = s3Uploader.upload(multipartFile, "static");
         return ResponseDto.success(imgUrl);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    private ResponseDto<?> handlingException(){
+        return ResponseDto.fail("CONVERT_FAIL", "fail convert multipart to file");
     }
 }
 

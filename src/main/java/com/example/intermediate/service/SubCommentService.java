@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubCommentService {
 
-    private final SubCommentRepository subcommentRepository;
+    private final SubCommentRepository subCommentRepository;
 
     private final TokenProvider tokenProvider;
     private final CommentService commentService;
@@ -49,19 +49,19 @@ public class SubCommentService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        SubComment subcomment = SubComment.builder()
+        SubComment subComment = SubComment.builder()
                 .member(member)
                 .comment(comment)
                 .content(requestDto.getContent())
                 .build();
-        subcommentRepository.save(subcomment);
+        subCommentRepository.save(subComment);
         return ResponseDto.success(
                 SubCommentResponseDto.builder()
-                        .id(subcomment.getId())
-                        .author(subcomment.getMember().getNickname())
-                        .content(subcomment.getContent())
-                        .createdAt(subcomment.getCreatedAt())
-                        .modifiedAt(subcomment.getModifiedAt())
+                        .id(subComment.getId())
+                        .author(subComment.getMember().getNickname())
+                        .content(subComment.getContent())
+                        .createdAt(subComment.getCreatedAt())
+                        .modifiedAt(subComment.getModifiedAt())
                         .build()
         );
     }
@@ -73,21 +73,21 @@ public class SubCommentService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        List<SubComment> subcommentList = subcommentRepository.findAllByComment(comment);
-        List<SubCommentResponseDto> subcommentResponseDtoList = new ArrayList<>();
+        List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
+        List<SubCommentResponseDto> subCommentResponseDtoList = new ArrayList<>();
 
-        for (SubComment subcomment : subcommentList) {
-            subcommentResponseDtoList.add(
+        for (SubComment subComment : subCommentList) {
+            subCommentResponseDtoList.add(
                     SubCommentResponseDto.builder()
-                            .id(subcomment.getId())
-                            .author(subcomment.getMember().getNickname())
-                            .content(subcomment.getContent())
-                            .createdAt(subcomment.getCreatedAt())
-                            .modifiedAt(subcomment.getModifiedAt())
+                            .id(subComment.getId())
+                            .author(subComment.getMember().getNickname())
+                            .content(subComment.getContent())
+                            .createdAt(subComment.getCreatedAt())
+                            .modifiedAt(subComment.getModifiedAt())
                             .build()
             );
         }
-        return ResponseDto.success(subcommentResponseDtoList);
+        return ResponseDto.success(subCommentResponseDtoList);
     }
 
     @Transactional
@@ -112,23 +112,23 @@ public class SubCommentService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        SubComment subcomment = isPresentSubComment(id);
-        if (null == subcomment) {
+        SubComment subComment = isPresentSubComment(id);
+        if (null == subComment) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 댓글 id 입니다.");
         }
 
-        if (subcomment.validateMember(member)) {
+        if (subComment.validateMember(member)) {
             return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
         }
 
-        subcomment.update(requestDto);
+        subComment.update(requestDto);
         return ResponseDto.success(
                 CommentResponseDto.builder()
-                        .id(subcomment.getId())
-                        .author(subcomment.getMember().getNickname())
-                        .content(subcomment.getContent())
-                        .createdAt(subcomment.getCreatedAt())
-                        .modifiedAt(subcomment.getModifiedAt())
+                        .id(subComment.getId())
+                        .author(subComment.getMember().getNickname())
+                        .content(subComment.getContent())
+                        .createdAt(subComment.getCreatedAt())
+                        .modifiedAt(subComment.getModifiedAt())
                         .build()
         );
     }
@@ -150,22 +150,22 @@ public class SubCommentService {
             return ResponseDto.fail("INVALID_TOKEN", "Token이 유효하지 않습니다.");
         }
 
-        SubComment subcomment = isPresentSubComment(id);
-        if (null == subcomment) {
+        SubComment subComment = isPresentSubComment(id);
+        if (null == subComment) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 댓글 id 입니다.");
         }
 
-        if (subcomment.validateMember(member)) {
+        if (subComment.validateMember(member)) {
             return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
         }
 
-        subcommentRepository.delete(subcomment);
+        subCommentRepository.delete(subComment);
         return ResponseDto.success("success");
     }
 
     @Transactional(readOnly = true)
     public SubComment isPresentSubComment(Long id) {
-        Optional<SubComment> optionalSubComment = subcommentRepository.findById(id);
+        Optional<SubComment> optionalSubComment = subCommentRepository.findById(id);
         return optionalSubComment.orElse(null);
     }
 
