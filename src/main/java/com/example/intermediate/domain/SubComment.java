@@ -30,10 +30,9 @@ public class SubComment extends Timestamped {
 
     @Column(nullable = false)
     private String content;
-
-    /* 220809 hyuk 추가 */
+    
     @OneToMany(mappedBy = "subComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes;
+    private List<Like> likeList;
 
     public void update(SubCommentRequestDto subcommentRequestDto) {
         this.content = subcommentRequestDto.getContent();

@@ -93,6 +93,7 @@ public class MyPageService {
                             .id(subComment.getId())
                             .author(subComment.getMember().getNickname())
                             .content(subComment.getContent())
+                            .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
                             .createdAt(subComment.getCreatedAt())
                             .modifiedAt(subComment.getModifiedAt())
                             .build()

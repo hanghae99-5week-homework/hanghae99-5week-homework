@@ -17,7 +17,7 @@ public class AwsS3Controller {
 
     private final AwsS3Service s3Uploader;
 
-    @PostMapping("/api/upload/image")
+    @PostMapping("/api/auth/image")
     @ResponseBody
     public ResponseDto<?> upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {

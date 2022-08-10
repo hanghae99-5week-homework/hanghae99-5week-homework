@@ -37,16 +37,15 @@ public class Post extends Timestamped {
   @Column
   private String imgUrl;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
 
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
-  /* 220809 hyuk 추가 */
   @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Like> likes;
+  private List<Like> likeList;
 
   public void update(PostRequestDto postRequestDto) {
     this.title = postRequestDto.getTitle();
