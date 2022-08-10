@@ -23,7 +23,7 @@ import java.util.Optional;
 public class SubCommentService {
 
     private final SubCommentRepository subCommentRepository;
-
+    private final LikeRepository likeRepository;
     private final TokenProvider tokenProvider;
     private final CommentService commentService;
 
@@ -67,6 +67,25 @@ public class SubCommentService {
     }
 
     @Transactional(readOnly = true)
+    public ResponseDto<?> getSubComment(Long id) {
+        SubComment subComment = isPresentSubComment(id);
+        if (null == subComment) {
+            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 대댓글 id 입니다.");
+        }
+
+        return ResponseDto.success(
+                SubCommentResponseDto.builder()
+                        .id(subComment.getId())
+                        .content(subComment.getContent())
+                        .author(subComment.getMember().getNickname())
+                        .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
+                        .createdAt(subComment.getCreatedAt())
+                        .modifiedAt(subComment.getModifiedAt())
+                        .build()
+        );
+    }
+
+    @Transactional(readOnly = true)
     public ResponseDto<?> getAllSubCommentsByComment(Long commentId) {
         Comment comment = commentService.isPresentComment(commentId);
         if (null == comment) {
@@ -82,6 +101,7 @@ public class SubCommentService {
                             .id(subComment.getId())
                             .author(subComment.getMember().getNickname())
                             .content(subComment.getContent())
+                            .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
                             .createdAt(subComment.getCreatedAt())
                             .modifiedAt(subComment.getModifiedAt())
                             .build()
@@ -127,6 +147,7 @@ public class SubCommentService {
                         .id(subComment.getId())
                         .author(subComment.getMember().getNickname())
                         .content(subComment.getContent())
+                        .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
                         .createdAt(subComment.getCreatedAt())
                         .modifiedAt(subComment.getModifiedAt())
                         .build()
