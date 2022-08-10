@@ -3,12 +3,14 @@ package com.example.intermediate.service;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.intermediate.FileTypeErrorException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -51,6 +53,11 @@ public class AwsS3Service {
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
+        String type = file.getContentType();
+        System.out.println(type);
+        if (type != null && !type.startsWith("image")) {
+            throw new FileTypeErrorException();
+        }
         File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
