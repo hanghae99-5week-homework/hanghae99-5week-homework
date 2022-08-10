@@ -43,12 +43,16 @@ public class LikeService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        Like like = Like.builder()
-                .post(post)
-                .member(member)
-                .build();
-        likeRepository.save(like);
-        return ResponseDto.success("Like success");
+        if (likeRepository.findByMemberAndPost(member, post) == null) {
+            Like like = Like.builder()
+                    .post(post)
+                    .member(member)
+                    .build();
+            likeRepository.save(like);
+            return ResponseDto.success("Like success");
+        } else {
+            return ResponseDto.fail("ALREADY_EXIST", "이미 좋아요를 누르셨습니다.");
+        }
     }
 
     @Transactional
@@ -80,10 +84,11 @@ public class LikeService {
         }
 
         if (like.validateMember(member)) {
-            return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
+            return ResponseDto.fail("BAD_REQUEST", "작성자만 취소할 수 있습니다.");
         }
 
-        likeRepository.delete(like);
+        Like deleteLike = likeRepository.findByMemberAndPost(member, post);
+        likeRepository.delete(deleteLike);
 
         return ResponseDto.success("Unlike success");
     }
@@ -110,12 +115,16 @@ public class LikeService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        Like like = Like.builder()
-                .comment(comment)
-                .member(member)
-                .build();
-        likeRepository.save(like);
-        return ResponseDto.success("Like success");
+        if (likeRepository.findByMemberAndComment(member, comment) == null) {
+            Like like = Like.builder()
+                    .comment(comment)
+                    .member(member)
+                    .build();
+            likeRepository.save(like);
+            return ResponseDto.success("Like success");
+        } else {
+            return ResponseDto.fail("ALREADY_EXIST", "이미 좋아요를 누르셨습니다.");
+        }
     }
 
     @Transactional
@@ -147,10 +156,11 @@ public class LikeService {
         }
 
         if (like.validateMember(member)) {
-            return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
+            return ResponseDto.fail("BAD_REQUEST", "작성자만 취소할 수 있습니다.");
         }
 
-        likeRepository.delete(like);
+        Like deleteLike = likeRepository.findByMemberAndComment(member, comment);
+        likeRepository.delete(deleteLike);
 
         return ResponseDto.success("Unlike success");
     }
@@ -177,12 +187,16 @@ public class LikeService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        Like like = Like.builder()
-                .subComment(subComment)
-                .member(member)
-                .build();
-        likeRepository.save(like);
-        return ResponseDto.success("Like success");
+        if (likeRepository.findByMemberAndSubComment(member, subComment) == null) {
+            Like like = Like.builder()
+                    .subComment(subComment)
+                    .member(member)
+                    .build();
+            likeRepository.save(like);
+            return ResponseDto.success("Like success");
+        } else {
+            return ResponseDto.fail("ALREADY_EXIST", "이미 좋아요를 누르셨습니다.");
+        }
     }
 
     @Transactional
@@ -214,12 +228,16 @@ public class LikeService {
         }
 
         if (like.validateMember(member)) {
-            return ResponseDto.fail("BAD_REQUEST", "작성자만 수정할 수 있습니다.");
+            return ResponseDto.fail("BAD_REQUEST", "작성자만 취소할 수 있습니다.");
         }
 
-        likeRepository.delete(like);
-
-        return ResponseDto.success("Unlike success");
+        Like deleteLike = likeRepository.findByMemberAndSubComment(member, subComment);
+        if (deleteLike == null) {
+            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 좋아요 입니다.");
+        } else {
+            likeRepository.delete(deleteLike);
+            return ResponseDto.success("Unlike success");
+        }
     }
 
     @Transactional(readOnly = true)
