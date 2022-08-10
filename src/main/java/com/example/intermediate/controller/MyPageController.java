@@ -17,7 +17,7 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
-    @GetMapping("/api/auth/mypage")
+    @GetMapping("/api/auth/my-page")
     public ResponseDto<?> getAllContentsByMember(HttpServletRequest request) {
         return myPageService.getAllContentsByMember(request);
     }
