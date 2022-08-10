@@ -26,6 +26,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final SubCommentRepository subCommentRepository;
+    private final LikeRepository likeRepository;
     private final TokenProvider tokenProvider;
     private final PostService postService;
 
@@ -84,6 +85,7 @@ public class CommentService {
                             .id(subComment.getId())
                             .author(subComment.getMember().getNickname())
                             .content(subComment.getContent())
+                            .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
                             .createdAt(subComment.getCreatedAt())
                             .modifiedAt(subComment.getModifiedAt())
                             .build()
@@ -96,6 +98,7 @@ public class CommentService {
                         .content(comment.getContent())
                         .subCommentResponseDtoList(subCommentResponseDtoList)
                         .author(comment.getMember().getNickname())
+                        .likesCount(likeRepository.countByCommentId(comment.getId()))
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
                         .build()
@@ -109,20 +112,40 @@ public class CommentService {
         if (null == post) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
-
         List<Comment> commentList = commentRepository.findAllByPost(post);
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
         for (Comment comment : commentList) {
+
+            List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
+            List<SubCommentResponseDto> subCommentResponseDtoList = new ArrayList<>();
+
+            for (SubComment subComment : subCommentList) {
+                subCommentResponseDtoList.add(
+                        SubCommentResponseDto.builder()
+                                .id(subComment.getId())
+                                .author(subComment.getMember().getNickname())
+                                .content(subComment.getContent())
+                                .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
+                                .createdAt(subComment.getCreatedAt())
+                                .modifiedAt(subComment.getModifiedAt())
+                                .build()
+                );
+            }
+
             commentResponseDtoList.add(
                     CommentResponseDto.builder()
                             .id(comment.getId())
                             .author(comment.getMember().getNickname())
                             .content(comment.getContent())
+                            .likesCount(likeRepository.countByCommentId(comment.getId()))
                             .createdAt(comment.getCreatedAt())
                             .modifiedAt(comment.getModifiedAt())
+                            .subCommentResponseDtoList(subCommentResponseDtoList)
                             .build()
             );
         }
+
         return ResponseDto.success(commentResponseDtoList);
     }
 
@@ -163,6 +186,7 @@ public class CommentService {
                         .id(comment.getId())
                         .author(comment.getMember().getNickname())
                         .content(comment.getContent())
+                        .likesCount(likeRepository.countByCommentId(comment.getId()))
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
                         .build()
