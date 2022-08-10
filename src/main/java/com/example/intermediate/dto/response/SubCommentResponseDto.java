@@ -1,4 +1,4 @@
-package com.example.assignment3.dto.response;
+package com.example.intermediate.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,7 @@ public class SubCommentResponseDto {
     private Long id;
     private String author;
     private String content;
+    private Long likesCount;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }
