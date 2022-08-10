@@ -34,6 +34,7 @@ public class Scheduler {
             List<Comment> postIdBycomment = commentRepository.findAllByPost(postList.get(i));
 
             if (postIdBycomment.size() == 0) {
+		log.info("게시물 <" + postList.get(i).getTitle() + "> 이 삭제되었습니다,");
                 postService.deleteNoCommentPost(postList.get(i).getId());
             }
         }
