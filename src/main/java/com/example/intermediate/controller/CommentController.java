@@ -20,29 +20,29 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @RequestMapping(value = "/api/auth/comment", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/comments", method = RequestMethod.POST)
     public ResponseDto<?> createComment(@RequestBody CommentRequestDto requestDto,
                                         HttpServletRequest request) {
         return commentService.createComment(requestDto, request);
     }
 
-    @RequestMapping(value = "/api/comment/detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/comments/detail/{id}", method = RequestMethod.GET)
     public ResponseDto<?> getComment(@PathVariable Long id) {
         return commentService.getComment(id);
     }
 
-    @RequestMapping(value = "/api/comment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/comments/{id}", method = RequestMethod.GET)
     public ResponseDto<?> getAllComments(@PathVariable Long id) {
         return commentService.getAllCommentsByPost(id);
     }
 
-    @RequestMapping(value = "/api/auth/comment/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/auth/comments/{id}", method = RequestMethod.PUT)
     public ResponseDto<?> updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto,
                                         HttpServletRequest request) {
         return commentService.updateComment(id, requestDto, request);
     }
 
-    @RequestMapping(value = "/api/auth/comment/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/auth/comments/{id}", method = RequestMethod.DELETE)
     public ResponseDto<?> deleteComment(@PathVariable Long id,
                                         HttpServletRequest request) {
         return commentService.deleteComment(id, request);
