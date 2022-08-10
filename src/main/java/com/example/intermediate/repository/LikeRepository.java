@@ -1,6 +1,6 @@
 package com.example.intermediate.repository;
 
-import com.example.intermediate.domain.Like;
+import com.example.intermediate.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

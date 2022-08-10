@@ -1,13 +1,13 @@
 package com.example.intermediate.service;
 
-import com.example.intermediate.dto.request.SubCommentRequestDto;
-import com.example.intermediate.dto.response.CommentResponseDto;
-import com.example.intermediate.dto.response.ResponseDto;
-import com.example.intermediate.dto.response.SubCommentResponseDto;
 import com.example.intermediate.domain.Comment;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.SubComment;
+import com.example.intermediate.dto.request.SubCommentRequestDto;
+import com.example.intermediate.dto.response.ResponseDto;
+import com.example.intermediate.dto.response.SubCommentResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
+import com.example.intermediate.repository.LikeRepository;
 import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
