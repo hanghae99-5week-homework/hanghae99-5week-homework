@@ -34,12 +34,12 @@ public class LikeController {
         return likeService.unLikeByCommentId(commentId, request);
     }
 
-    @PostMapping("/like/subcomment/{subCommentId}")
+    @PostMapping("/like/sub-comment/{subCommentId}")
     public ResponseDto<?> likeBySubCommentId(@PathVariable Long subCommentId, HttpServletRequest request) {
         return likeService.likeBySubCommentId(subCommentId, request);
     }
 
-    @DeleteMapping("/like/subcomment/{subCommentId}")
+    @DeleteMapping("/like/sub-comment/{subCommentId}")
     public ResponseDto<?> unLikeBySubCommentId(@PathVariable Long subCommentId, HttpServletRequest request) {
         return likeService.unLikeBySubCommentId(subCommentId, request);
     }

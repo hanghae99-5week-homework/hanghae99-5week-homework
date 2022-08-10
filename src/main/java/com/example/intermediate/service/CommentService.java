@@ -10,6 +10,7 @@ import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.dto.response.SubCommentResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
+import com.example.intermediate.repository.LikeRepository;
 import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -99,6 +100,7 @@ public class CommentService {
                         .subCommentResponseDtoList(subCommentResponseDtoList)
                         .author(comment.getMember().getNickname())
                         .likesCount(likeRepository.countByCommentId(comment.getId()))
+                        .subCommentsCount(subCommentRepository.countByCommentId(comment.getId()))
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
                         .build()
@@ -139,6 +141,7 @@ public class CommentService {
                             .author(comment.getMember().getNickname())
                             .content(comment.getContent())
                             .likesCount(likeRepository.countByCommentId(comment.getId()))
+                            .subCommentsCount(subCommentRepository.countByCommentId(comment.getId()))
                             .createdAt(comment.getCreatedAt())
                             .modifiedAt(comment.getModifiedAt())
                             .subCommentResponseDtoList(subCommentResponseDtoList)
@@ -187,6 +190,7 @@ public class CommentService {
                         .author(comment.getMember().getNickname())
                         .content(comment.getContent())
                         .likesCount(likeRepository.countByCommentId(comment.getId()))
+                        .subCommentsCount(subCommentRepository.countByCommentId(comment.getId()))
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
                         .build()

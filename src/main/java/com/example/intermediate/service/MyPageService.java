@@ -1,9 +1,6 @@
 package com.example.intermediate.service;
 
-import com.example.intermediate.domain.Comment;
-import com.example.intermediate.domain.Member;
-import com.example.intermediate.domain.Post;
-import com.example.intermediate.domain.SubComment;
+import com.example.intermediate.domain.*;
 import com.example.intermediate.dto.response.*;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.*;
@@ -50,16 +47,6 @@ public class MyPageService {
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             postResponseDtoList.add(
-<<<<<<< Updated upstream
-                    PostResponseDto.builder()
-                            .id(post.getId())
-                            .author(post.getMember().getNickname())
-                            .title(post.getTitle())
-                            .content(post.getContent())
-                            .createdAt(post.getCreatedAt())
-                            .modifiedAt(post.getModifiedAt())
-                            .build()
-=======
                 PostResponseDto.builder()
                     .id(post.getId())
                     .author(post.getMember().getNickname())
@@ -71,7 +58,6 @@ public class MyPageService {
                     .createdAt(post.getCreatedAt())
                     .modifiedAt(post.getModifiedAt())
                     .build()
->>>>>>> Stashed changes
             );
         }
 
@@ -113,8 +99,6 @@ public class MyPageService {
             );
         }
 
-<<<<<<< Updated upstream
-=======
         List<Like> likeByMember = likeRepository.findByMember(member);
         List<Post> likePostList = new ArrayList<>();
         List<Comment> likeCommentList = new ArrayList<>();
@@ -182,12 +166,12 @@ public class MyPageService {
             .likeSubCommentResponseDtoList(likeSubCommentResponseDtoList)
             .build();
 
->>>>>>> Stashed changes
         return ResponseDto.success(
             MyPageResponseDto.builder()
                 .postResponseDtoList(postResponseDtoList)
                 .commentResponseDtoList(commentResponseDtoList)
                 .subCommentResponseDtoList(subCommentResponseDtoList)
+                .likeResponseDto(likeResponseDto)
                 .build()
         );
     }

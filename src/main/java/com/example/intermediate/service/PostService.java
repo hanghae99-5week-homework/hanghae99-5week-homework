@@ -1,5 +1,6 @@
 package com.example.intermediate.service;
 
+import com.example.intermediate.domain.SubComment;
 import com.example.intermediate.dto.response.CommentResponseDto;
 import com.example.intermediate.dto.response.PostResponseDto;
 import com.example.intermediate.domain.Comment;
@@ -7,13 +8,17 @@ import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
 import com.example.intermediate.dto.request.PostRequestDto;
 import com.example.intermediate.dto.response.ResponseDto;
+import com.example.intermediate.dto.response.SubCommentResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
+import com.example.intermediate.repository.LikeRepository;
 import com.example.intermediate.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+
+import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,6 +119,7 @@ public class PostService {
                         .author(post.getMember().getNickname())
                         .imgUrl(post.getImgUrl())
                         .likesCount(likeRepository.countByPostId(post.getId()))
+                        .commentsCount(commentRepository.countByPostId(post.getId()))
                         .createdAt(post.getCreatedAt())
                         .modifiedAt(post.getModifiedAt())
                         .build()
@@ -134,6 +140,7 @@ public class PostService {
                             .content(post.getContent())
                             .imgUrl(post.getImgUrl())
                             .likesCount(likeRepository.countByPostId(post.getId()))
+                            .commentsCount(commentRepository.countByPostId(post.getId()))
                             .createdAt(post.getCreatedAt())
                             .modifiedAt(post.getModifiedAt())
                             .build()
@@ -177,6 +184,7 @@ public class PostService {
                         .title(post.getTitle())
                         .content(post.getContent())
                         .likesCount(likeRepository.countByPostId(post.getId()))
+                        .commentsCount(commentRepository.countByPostId(post.getId()))
                         .imgUrl(post.getImgUrl())
                         .createdAt(post.getCreatedAt())
                         .modifiedAt(post.getModifiedAt())
