@@ -26,25 +26,25 @@ public class CommentController {
         return commentService.createComment(requestDto, request);
     }
 
-    @RequestMapping(value = "/api/comments/detail/{id}", method = RequestMethod.GET)
-    public ResponseDto<?> getComment(@PathVariable Long id) {
-        return commentService.getComment(id);
+    @RequestMapping(value = "/api/comments/detail/{postId}", method = RequestMethod.GET)
+    public ResponseDto<?> getComment(@PathVariable Long postId) {
+        return commentService.getComment(postId);
     }
 
-    @RequestMapping(value = "/api/comments/{id}", method = RequestMethod.GET)
-    public ResponseDto<?> getAllComments(@PathVariable Long id) {
-        return commentService.getAllCommentsByPost(id);
+    @RequestMapping(value = "/api/comments/{postId}", method = RequestMethod.GET)
+    public ResponseDto<?> getAllComments(@PathVariable Long postId) {
+        return commentService.getAllCommentsByPost(postId);
     }
 
-    @RequestMapping(value = "/api/auth/comments/{id}", method = RequestMethod.PUT)
-    public ResponseDto<?> updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto,
+    @RequestMapping(value = "/api/auth/comments/{commentId}", method = RequestMethod.PUT)
+    public ResponseDto<?> updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto,
                                         HttpServletRequest request) {
-        return commentService.updateComment(id, requestDto, request);
+        return commentService.updateComment(commentId, requestDto, request);
     }
 
-    @RequestMapping(value = "/api/auth/comments/{id}", method = RequestMethod.DELETE)
-    public ResponseDto<?> deleteComment(@PathVariable Long id,
+    @RequestMapping(value = "/api/auth/comments/{commentId}", method = RequestMethod.DELETE)
+    public ResponseDto<?> deleteComment(@PathVariable Long commentId,
                                         HttpServletRequest request) {
-        return commentService.deleteComment(id, request);
+        return commentService.deleteComment(commentId, request);
     }
 }

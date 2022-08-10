@@ -26,9 +26,9 @@ public class PostController {
     return postService.createPost(requestDto, request);
   }
 
-  @RequestMapping(value = "/api/posts/{id}", method = RequestMethod.GET)
-  public ResponseDto<?> getPost(@PathVariable Long id) {
-    return postService.getPost(id);
+  @RequestMapping(value = "/api/posts/{postId}", method = RequestMethod.GET)
+  public ResponseDto<?> getPost(@PathVariable Long postId) {
+    return postService.getPost(postId);
   }
 
   @RequestMapping(value = "/api/posts", method = RequestMethod.GET)
@@ -36,16 +36,16 @@ public class PostController {
     return postService.getAllPost();
   }
 
-  @RequestMapping(value = "/api/auth/posts/{id}", method = RequestMethod.PUT)
-  public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto,
+  @RequestMapping(value = "/api/auth/posts/{postId}", method = RequestMethod.PUT)
+  public ResponseDto<?> updatePost(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto,
       HttpServletRequest request) {
-    return postService.updatePost(id, postRequestDto, request);
+    return postService.updatePost(postId, postRequestDto, request);
   }
 
-  @RequestMapping(value = "/api/auth/posts/{id}", method = RequestMethod.DELETE)
-  public ResponseDto<?> deletePost(@PathVariable Long id,
+  @RequestMapping(value = "/api/auth/posts/{postId}", method = RequestMethod.DELETE)
+  public ResponseDto<?> deletePost(@PathVariable Long postId,
       HttpServletRequest request) {
-    return postService.deletePost(id, request);
+    return postService.deletePost(postId, request);
   }
 //MultipartHttpServletRequest
 }
