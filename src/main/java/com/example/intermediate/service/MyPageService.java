@@ -50,6 +50,7 @@ public class MyPageService {
         List<PostResponseDto> postResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             postResponseDtoList.add(
+<<<<<<< Updated upstream
                     PostResponseDto.builder()
                             .id(post.getId())
                             .author(post.getMember().getNickname())
@@ -58,6 +59,19 @@ public class MyPageService {
                             .createdAt(post.getCreatedAt())
                             .modifiedAt(post.getModifiedAt())
                             .build()
+=======
+                PostResponseDto.builder()
+                    .id(post.getId())
+                    .author(post.getMember().getNickname())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .imgUrl(post.getImgUrl())
+                    .likesCount(likeRepository.countByPostId(post.getId()))
+                    .commentsCount(commentRepository.countByPostId(post.getId()))
+                    .createdAt(post.getCreatedAt())
+                    .modifiedAt(post.getModifiedAt())
+                    .build()
+>>>>>>> Stashed changes
             );
         }
 
@@ -73,6 +87,8 @@ public class MyPageService {
                             .id(comment.getId())
                             .author(comment.getMember().getNickname())
                             .content(comment.getContent())
+                            .likesCount(likeRepository.countByCommentId(comment.getId()))
+                            .subCommentsCount(subCommentRepository.countByCommentId(comment.getId()))
                             .createdAt(comment.getCreatedAt())
                             .modifiedAt(comment.getModifiedAt())
                             .build()
@@ -97,6 +113,76 @@ public class MyPageService {
             );
         }
 
+<<<<<<< Updated upstream
+=======
+        List<Like> likeByMember = likeRepository.findByMember(member);
+        List<Post> likePostList = new ArrayList<>();
+        List<Comment> likeCommentList = new ArrayList<>();
+        List<SubComment> likeSubCommentList = new ArrayList<>();
+
+        for (Like like : likeByMember) {
+            if (like.getPost() != null) {
+                likePostList.add(like.getPost());
+            } else if (like.getComment() != null) {
+                likeCommentList.add(like.getComment());
+            } else if (like.getSubComment() != null) {
+                likeSubCommentList.add(like.getSubComment());
+            }
+        }
+
+        List<PostResponseDto> likePostResponseDtoList = new ArrayList<>();
+        for (Post post : likePostList) {
+            likePostResponseDtoList.add(
+                PostResponseDto.builder()
+                    .id(post.getId())
+                    .author(post.getMember().getNickname())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .imgUrl(post.getImgUrl())
+                    .likesCount(likeRepository.countByPostId(post.getId()))
+                    .commentsCount(commentRepository.countByPostId(post.getId()))
+                    .createdAt(post.getCreatedAt())
+                    .modifiedAt(post.getModifiedAt())
+                    .build()
+            );
+        }
+
+        List<CommentResponseDto> likeCommentResponseDtoList = new ArrayList<>();
+        for (Comment comment : likeCommentList) {
+            likeCommentResponseDtoList.add(
+                CommentResponseDto.builder()
+                    .id(comment.getId())
+                    .author(comment.getMember().getNickname())
+                    .content(comment.getContent())
+                    .likesCount(likeRepository.countByCommentId(comment.getId()))
+                    .subCommentsCount(subCommentRepository.countByCommentId(comment.getId()))
+                    .createdAt(comment.getCreatedAt())
+                    .modifiedAt(comment.getModifiedAt())
+                    .build()
+            );
+        }
+
+        List<SubCommentResponseDto> likeSubCommentResponseDtoList = new ArrayList<>();
+        for (SubComment subComment : likeSubCommentList) {
+            likeSubCommentResponseDtoList.add(
+                SubCommentResponseDto.builder()
+                    .id(subComment.getId())
+                    .author(subComment.getMember().getNickname())
+                    .content(subComment.getContent())
+                    .likesCount(likeRepository.countBySubCommentId(subComment.getId()))
+                    .createdAt(subComment.getCreatedAt())
+                    .modifiedAt(subComment.getModifiedAt())
+                    .build()
+            );
+        }
+
+        LikeResponseDto likeResponseDto = LikeResponseDto.builder()
+            .likePostResponseDtoList(likePostResponseDtoList)
+            .likeCommentResponseDtoList(likeCommentResponseDtoList)
+            .likeSubCommentResponseDtoList(likeSubCommentResponseDtoList)
+            .build();
+
+>>>>>>> Stashed changes
         return ResponseDto.success(
             MyPageResponseDto.builder()
                 .postResponseDtoList(postResponseDtoList)

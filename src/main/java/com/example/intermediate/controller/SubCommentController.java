@@ -17,24 +17,24 @@ public class SubCommentController {
     private final SubCommentService subCommentService;
 
 
-    @RequestMapping(value = "/api/auth/sub-comment", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/sub-comments", method = RequestMethod.POST)
     public ResponseDto<?> createSubComment(@RequestBody SubCommentRequestDto requestDto,
                                         HttpServletRequest request) {
         return subCommentService.createSubComment(requestDto, request);
     }
 
-    @RequestMapping(value = "/api/sub-comment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/sub-comments/{id}", method = RequestMethod.GET)
     public ResponseDto<?> getAllSubComments(@PathVariable Long id) {
         return subCommentService.getAllSubCommentsByComment(id);
     }
 
-    @RequestMapping(value = "/api/auth/sub-comment/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/auth/sub-comments/{id}", method = RequestMethod.PUT)
     public ResponseDto<?> updateSubComment(@PathVariable Long id, @RequestBody SubCommentRequestDto requestDto,
                                         HttpServletRequest request) {
         return subCommentService.updateSubComment(id, requestDto, request);
     }
 
-    @RequestMapping(value = "/api/auth/sub-comment/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/auth/sub-comments/{id}", method = RequestMethod.DELETE)
     public ResponseDto<?> deleteSubComment(@PathVariable Long id,
                                         HttpServletRequest request) {
         return subCommentService.deleteSubComment(id, request);

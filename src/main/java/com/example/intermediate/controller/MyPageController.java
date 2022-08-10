@@ -17,7 +17,11 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
+<<<<<<< Updated upstream
     @GetMapping("")
+=======
+    @GetMapping("/api/auth/my-page")
+>>>>>>> Stashed changes
     public ResponseDto<?> getAllContentsByMember(HttpServletRequest request) {
         return myPageService.getAllContentsByMember(request);
     }
