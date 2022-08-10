@@ -123,7 +123,7 @@ public class SubCommentService {
 
         subComment.update(requestDto);
         return ResponseDto.success(
-                CommentResponseDto.builder()
+                SubCommentResponseDto.builder()
                         .id(subComment.getId())
                         .author(subComment.getMember().getNickname())
                         .content(subComment.getContent())
